@@ -1,0 +1,13 @@
+name: myenv
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - flake8
+  - pytest
+  - pip:
+      - robotframework
+      - robotframework-seleniumlibrary
+      - robotframework-browser
