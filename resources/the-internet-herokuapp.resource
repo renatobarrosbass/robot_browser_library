@@ -4,7 +4,7 @@ Library    Browser
 
 *** Variables ***
 ${BROWSER}         chromium
-${HEADLESS}        ${false}
+${HEADLESS}        ${true}
 
 
 *** Keywords ***
