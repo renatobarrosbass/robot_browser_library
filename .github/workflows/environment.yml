@@ -7,7 +7,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -19,8 +18,10 @@ jobs:
           activate-environment: robot-env
           auto-activate-base: false
 
-      - name: Show conda info (debug)
-        run: conda info
+      - name: Install pip dependencies (garante instalação via pip)
+        run: |
+          pip install -r <(conda list --explicit | grep -E 'robotframework|seleniumlibrary|browser' | awk '{print $1}')
+        shell: bash
 
       - name: Install browsers for robotframework-browser
         run: |
@@ -37,4 +38,4 @@ jobs:
 
       - name: Test with pytest
         run: |
-          pytest || true  # Caso não tenha testes pytest, não falha o job
+          pytest || true
