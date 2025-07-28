@@ -5,6 +5,7 @@ on: [push, workflow_dispatch]
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -21,15 +22,12 @@ jobs:
 
       - name: Install dependencies
         run: |
-          set -ex
           python -m pip install --upgrade pip
           python -m pip install robotframework robotframework-seleniumlibrary robotframework-browser flake8 pytest
-
-      - name: Debug Python and pip
-        run: |
-          which python
-          python --version
           python -m pip show robotframework-browser
+
+      - name: List installed packages
+        run: pip list
 
       - name: Install browsers for robotframework-browser
         run: |
