@@ -11,35 +11,29 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Miniconda
-        uses: conda-incubator/setup-miniconda@v3
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          environment-file: environment.yml
-          activate-environment: robot-env
-          auto-activate-base: false
+          python-version: '3.10'
 
-      - name: Install robotframework-browser (via pip)
-        shell: bash -l {0}
+      - name: Install dependencies
         run: |
-          pip install robotframework-browser
+          pip install --upgrade pip
+          pip install robotframework robotframework-seleniumlibrary robotframework-browser flake8 pytest
 
       - name: Install browsers for robotframework-browser
-        shell: bash -l {0}
         run: |
           python -m robotframework_browser install
 
       - name: Run Robot Framework tests
-        shell: bash -l {0}
         run: |
           robot tests/
 
       - name: Lint with flake8
-        shell: bash -l {0}
         run: |
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
       - name: Test with pytest
-        shell: bash -l {0}
         run: |
           pytest || true
