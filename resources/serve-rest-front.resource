@@ -7,7 +7,7 @@ Library  DateTime
 
 *** Variables ***
 ${BROWSER}           chromium
-${HEADLESS}          ${false}
+${HEADLESS}          ${true}
 ${SITE_SERVE_REST}   https://front.serverest.dev/
 
 *** Keywords ***
