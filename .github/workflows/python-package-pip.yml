@@ -22,7 +22,7 @@ jobs:
       - name: Upgrade pip and install Python dependencies
         run: |
           python3 -m pip install --upgrade pip
-          python3 -m pip install robotframework robotframework-seleniumlibrary robotframework-browser
+          python3 -m pip install robotframework robotframework-seleniumlibrary robotframework-browser robotframework-fakerlibrary
 
       - name: Confirm robotframework-browser installation
         run: python3 -m pip show robotframework-browser
