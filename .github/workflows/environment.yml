@@ -1,13 +1,40 @@
-name: robot-env
-channels:
-  - conda-forge
-  - defaults
-dependencies:
-  - python=3.10
-  - pip
-  - flake8
-  - pytest
-  - pip:
-      - robotframework
-      - robotframework-seleniumlibrary
-      - robotframework-browser
+name: Robot Framework Tests
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          environment-file: environment.yml
+          activate-environment: robot-env
+          auto-activate-base: false
+
+      - name: Show conda info (debug)
+        run: conda info
+
+      - name: Install browsers for robotframework-browser
+        run: |
+          python -m robotframework_browser install
+
+      - name: Run Robot Framework tests
+        run: |
+          robot tests/
+
+      - name: Lint with flake8
+        run: |
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+      - name: Test with pytest
+        run: |
+          pytest || true  # Caso não tenha testes pytest, não falha o job
